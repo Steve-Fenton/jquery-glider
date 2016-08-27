@@ -1,31 +1,25 @@
-var resizeTimer;
-$window = $(window);
-$window.on('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-        $window.trigger('resizeDone');
-    }, 100);
-});
-
-// DONE
-// Height based on tallest slide
-// Resize and re-position on resize
-// LTR and RTL direction support
-// next, back, goto
-// controls < >
-// control position (top middle bottom)
-// autoplay, stop on interaction
-
 // TODO:
-// animate slide contents
+// animate slide contents (i.e. contents appear after slide)
 // events... onslide etc
 // thumbnail control
 
 (function ($) {
+	var resizeTimer;
+	$window = $(window);
+	$window.on('resize', function () {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function () {
+			$window.trigger('glideResizeDone');
+		}, 100);
+	});
+	
 	function Glider($this, settings) {
 
 		this.nextIcon = '&gt;';
 		this.backIcon = '&lt;';
+		this.linkFunction = function(idx) {
+			return '<span class="glider-circle-icon">&nbsp;</span>';
+		};
 
 		this.direction = $this.attr('dir') || 'ltr';
 
@@ -36,17 +30,23 @@ $window.on('resize', function () {
 		this.currentSlide = 0;
 		this.autoplay = $this[0].hasAttribute('data-glider-autoplay');
 		this.controls = $this[0].hasAttribute('data-glider-controls');
+		this.links = $this[0].hasAttribute('data-glider-links');
+
 		this.controlLocation = $this.attr('data-glider-controls') || 'glider-bottom';
+		this.linkLocation = $this.attr('data-glider-links') || 'glider-bottom';
+
 		this.interval = null;
 
 		var _this = this;
-		_this.resize();
-		$window.on('resizeDone', function () { _this.resize() });
 
 		// controls
 		if (this.controls) {
 			$this.append(this.getBackControl(this.controlLocation, this.backIcon));
 			$this.append(this.getNextControl(this.controlLocation, this.nextIcon));
+		}
+
+		if (this.links) {
+			$this.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
 		}
 
 		// autoplay
@@ -55,15 +55,18 @@ $window.on('resize', function () {
 				_this.next();
 			}, 5000);
 		}
-		
-		// TODO: should be triggered by controls if controls are enabled
-		// _this.container.click(function () { _this.next(); });
+
+		_this.resize();
+		$window.on('glideResizeDone', function () { _this.resize() });
 	}
 
 	Glider.prototype = {
 		constructor: Glider,
 		positionSlider: function() {
 			var parentWidth = this.container.width();
+
+			$('.glider-link', this.container).removeClass('selected');
+			$('.glider-link-' + this.currentSlide, this.container).addClass('selected');
 
 			if (this.direction === 'ltr') {
 				this.list.css({'left': '-' + (parentWidth * this.currentSlide) + 'px'});
@@ -137,6 +140,7 @@ $window.on('resize', function () {
 			
 			var getListItem = function(idx) {
 				return $('<li>')
+					.addClass('glider-link glider-link-' + idx)
 					.click(function () { window.clearInterval(_this.interval); _this.goto(idx); })
 					.html(textFunction(idx));
 			}

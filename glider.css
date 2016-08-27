@@ -79,16 +79,30 @@
 
 .glider .glider-control-link {
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    position: absolute;
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 .glider .glider-control-link li {
     list-style: none;
     display: inline-block;
     cursor: pointer;
-    padding: 0.5em;
-    margin: 0.2em;
-    font-size: 2em;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0;
+    margin: 0.3em;
     color: #FFF;
+}
+
+.glider .glider-circle-icon {
+    display: inline-block;
+    background-color: #FFF;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+
+.glider .glider-link.selected .glider-circle-icon {
+    background-color: #1F3;
 }
