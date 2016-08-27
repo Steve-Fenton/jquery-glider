@@ -1,0 +1,94 @@
+
+.glider {
+    overflow: hidden;
+    position: relative;
+}
+
+.glider-list {
+    position: relative;
+}
+
+.glider-ltr .glider-list {
+    left: 0;
+}
+
+.glider-rtl .glider-list {
+    right: 0;
+}
+
+.glider-ltr.ease .glider-list {
+    transition: left 0.5s ease;
+}
+
+.glider-rtl.ease .glider-list {
+    transition: right 0.5s ease;
+}
+
+.glider .glider-item {
+    display: block;
+    box-sizing: border-box;
+}
+
+.glider-rtl .glider-item {
+    float: right;
+}
+
+.glider-ltr .glider-item {
+    float: left;
+}
+
+.glider .glider-control-back, .glider .glider-control-next {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    font-size: 2em;
+    padding: 0.5em;
+}
+
+.glider-ltr .glider-control-back {
+    position: absolute;
+    left: 0;
+}
+
+.glider-ltr .glider-control-next {
+    position: absolute;
+    right: 0;
+}
+
+.glider-rtl .glider-control-back {
+       position: absolute;
+    right: 0;
+}
+
+.glider-rtl .glider-control-next {
+    position: absolute;
+    left: 0;
+}
+
+.glider .glider-top {
+    top: 0;
+}
+
+.glider .glider-middle {
+    top: 40%;
+}
+
+.glider .glider-bottom {
+    bottom: 0;
+}
+
+.glider .glider-control-link {
+    padding: 0;
+    margin: 0;
+}
+
+.glider .glider-control-link li {
+    list-style: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.5em;
+    margin: 0.2em;
+    font-size: 2em;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+}

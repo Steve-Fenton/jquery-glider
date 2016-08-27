@@ -1,0 +1,319 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <style>
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    background-color: #222;
+    color: #FFF;
+    margin: 0;
+    padding: 1em 2em;
+}
+
+h2 {
+    background-color: #FFF;
+    color: #000;
+    margin: 1em 0;
+    padding: 0.5em 1em; 
+}
+
+.slide {
+    margin: 3em auto;
+    width: 80%;
+    min-width: 500px;
+}
+
+
+.slide ul {
+    padding: 0;
+    margin: 0;
+    background-color: #FFF;
+}
+
+.slide li {
+    list-style: none;
+    min-height: 400px;
+    padding: 1em 4em;
+    background-color: #000;
+}
+
+.slide li:nth-child(odd) {
+    text-align: right;
+}
+
+.slide li:nth-child(even) {
+    text-align: left;
+}
+
+.slide li h3 {
+    margin-top: 5em;
+    display: inline-block;
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    font-size: 2em;
+    width: 30%;
+}
+
+.slide li div {
+    display: inline-block;
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FFF;
+    font-size: 1.5em;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid silver;
+    border-collapse: collapse;
+    font-size: 1.1em;
+}
+
+th, td {
+    border: 1px solid silver;
+    padding: 0.5em;
+}
+
+table pre {
+    background-color: #000;
+}
+
+table code {
+    background-color: #000;
+    padding: 0 0.4em;
+}
+
+li pre {
+    margin: 1em 3em;
+    padding: 0 1em 1em 1em;
+    border: 1px solid silver;
+    background-color: #333;
+}
+
+#controls {
+    text-align: center;
+    position: relative;
+    top: -70px;
+}
+
+#controls ul {
+    display: inline-block;
+    padding: 0;
+}
+
+#controls .glider-control-back, #controls .glider-control-next, #controls li {
+    display: inline-block;
+    padding: 0.3em;
+    marging: 1em;
+    font-size: 2em;
+    cursor: pointer;
+}
+    </style>
+    <link rel="stylesheet" href="glider.css" />
+</head>
+<body>
+<h1>Glider Examples</h1>
+
+<table>
+    <thead>
+        <tr><th>Feature</th><th>Code</th></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Basic Use</td>
+            <td><pre><code>
+&lt;div class="slide">
+    &lt;ul>
+        &lt;li>One&lt;/li>
+        &lt;li>Two&lt;/li>
+        &lt;li>Three&lt;/li>
+    &lt;/ul>
+&lt;/div>
+&lt;script src="jquery.min.js">&lt;/script>
+&lt;script src="glider.js">&lt;/script>
+&lt;script>
+    var gliders = $('.slide').glider();	
+&lt;/script>
+
+</code></pre>
+        </tr>
+        <tr>
+            <td>Right to Left</td>
+            <td><code>dir="rtl"</code></td>
+        </tr>
+        <tr>
+            <td>Autoplay</td>
+            <td><code>data-glider-autoplay</code> or <code>data-glider-autoplay="true"</code></td>
+        </tr>
+        <tr>
+            <td>Controls</td>
+            <td><code>data-glider-controls="glider-top"</code> with <code>glider-top</code>, <code>glider-middle</code>, or <code>glider-bottom</code></td>
+        </tr>
+        <tr>
+            <td>Advance to next slide</td>
+            <td><code>slider.next();</code></td>
+        </tr>
+        <tr>
+            <td>Return to previous slide</td>
+            <td><code>slider.back();</code></td>
+        </tr>
+        <tr>
+            <td>Go to a specific slide</td>
+            <td><code>slider.goto(0);</code></td>
+        </tr>
+        <tr>
+            <td>Get a control element (so it can be placed outside of the slider)</td>
+            <td><pre><code>
+var backControl = slider.getBackControl('class-name', 'Back');
+var nextControl = slider.getNextControl('class-name', 'Next');
+var linkControl = slider.getLinkControl('class-name', function (idx) { return idx + 1; });
+                </code></pre></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Autoplay: <code>data-glider-autoplay</code></h2>
+
+<div dir="ltr" class="slide" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Autoplay (RTL): <code>dir="rtl" data-glider-autoplay</code></h2>
+
+<div dir="rtl" class="slide" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre dir="ltr"><code>
+&lt;div
+    dir="rtl"
+    class="slide"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Controls: <code>data-glider-controls</code></h2>
+
+<div dir="ltr" class="slide" data-glider-controls="glider-top">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-top">
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Controls (RTL): <code>dir="rtl" data-glider-controls</code></h2>
+
+<div dir="rtl" class="slide" data-glider-controls="glider-top">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre dir="ltr"><code>
+&lt;div
+    dir="rtl"
+    class="slide"
+    data-glider-controls="glider-top">
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Autoplay &amp; Controls (LTR)</h2>
+
+<div dir="ltr" class="slide" data-glider-controls="glider-middle" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Autoplay &amp; Controls (RTL)</h2>
+
+<div dir="rtl" class="slide" data-glider-controls="glider-middle" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre dir="ltr"><code>
+&lt;div
+    dir="rtl"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Autoplay &amp; Self-Defined Controls</h2>
+
+<div dir="ltr" class="slide" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<div id="controls"></div>
+
+<script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
+<script src="glider.js"></script>
+<script>
+    // You get an array of gliders, one for each matching container
+    var gliders = $('.slide').glider();	
+
+    var index = 6;
+    $('#controls')
+        .append(gliders[index].getBackControl('', '&lt;--'))
+        .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
+        .append(gliders[index].getNextControl('', '--&gt;'));
+</script>
+</body>
+</html>
