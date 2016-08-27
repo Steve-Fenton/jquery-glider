@@ -75,18 +75,18 @@ pre {
     background-color: #333;
 }
 
-#controls {
+.controls {
     text-align: center;
     position: relative;
     top: -70px;
 }
 
-#controls ul {
+.controls ul {
     display: inline-block;
     padding: 0;
 }
 
-#controls .glider-control-back, #controls .glider-control-next, #controls li {
+.controls .glider-control-back, .controls .glider-control-next, .controls li {
     display: inline-block;
     padding: 0.3em;
     marging: 1em;
@@ -214,7 +214,26 @@ pre {
     </ul>
 </div>
 
-<div id="controls"></div>
+<div id="controls-ltr" class="controls"></div>
+
+<h2>Autoplay &amp; Self-Defined Controls (RTL)</h2>
+
+<div dir="rtl" class="slide" data-glider-autoplay>
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-autoplay>
+</code></pre></li>
+    </ul>
+</div>
+
+<div id="controls-rtl" class="controls" dir="rtl"></div>
 
 <script
     src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -226,7 +245,13 @@ pre {
     var gliders = $('.slide').glider();	
 
     var index = 6;
-    $('#controls')
+    $('#controls-ltr')
+        .append(gliders[index].getBackControl('', '&lt;--'))
+        .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
+        .append(gliders[index].getNextControl('', '--&gt;'));
+
+    index = 7;
+    $('#controls-rtl')
         .append(gliders[index].getBackControl('', '&lt;--'))
         .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
         .append(gliders[index].getNextControl('', '--&gt;'));
