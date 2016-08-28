@@ -31,6 +31,18 @@ body {
     background-color: #000;
 }
 
+/* Recommended style...
+    only show first item in glider targets unless JavaScript runs 
+*/
+.slide > ul > li {
+    display: none;
+}
+
+.slide > ul > li:first-child {
+    display: block;
+}
+/* - */
+
 .slide > ul > li:nth-child(odd) {
     text-align: right;
 }

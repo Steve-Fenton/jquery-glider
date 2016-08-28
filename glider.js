@@ -79,8 +79,20 @@
 		resize: function() {
 			var parentWidth = this.container.width();
 
+			// Set width of slider and items
 			this.list.css({ width: (parentWidth * this.items.length) + 'px' });
 			this.items.css({ width: parentWidth + 'px' });
+
+			// Set controls and links placed in the middle to half way vertically
+			var slideHeight = this.items.eq(0).height();
+			$('.glider-middle', this.container).each(function () {
+				$control = $(this);
+				var height = $control.height();
+
+				var h = (slideHeight - height) / 2;
+				console.log(slideHeight + ' ' + height + ' '  +h);
+				$control.css('top', h + 'px');
+			});
 
 			this.positionSlider();
 		},
