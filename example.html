@@ -40,6 +40,8 @@ body {
 }
 
 .slide > ul > li h3 {
+    /* Removal speed */
+    transition: opacity 0.2s ease;
     margin-top: 5em;
     display: inline-block;
     padding: 1em;
@@ -47,14 +49,59 @@ body {
     color: #FFF;
     font-size: 2em;
     width: 30%;
+    opacity: 1;
+}
+
+.slide > ul > li.selected h3 {
+    opacity: 1;
+    /* Arriving speed */
+    transition: opacity 0.5s ease;
+}
+
+.slide > ul > li.leaving h3 {
+    opacity: 0;
+    /* Removal speed */
+    transition: opacity 0.2s ease;
+}
+
+.slide > ul > li.arriving h3 {
+    opacity: 0;
+    /* Removal speed */
+    transition: opacity 0.2s ease;
 }
 
 .slide > ul > li > div {
+    /* Removal speed */
+    transition: opacity 0.2s ease;
     display: inline-block;
     padding: 1em;
     background-color: rgba(0, 0, 0, 0.5);
     color: #FFF;
     font-size: 1.5em;
+    opacity: 1;
+}
+
+.slide > ul > li.selected div {
+    opacity: 1;
+    /* Arriving speed */
+    transition: opacity 0.5s ease;
+    /* Arriving delay */
+    -webkit-transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s;
+    -o-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.slide > ul > li.leaving div {
+    /* Removal speed */
+    transition: opacity 0.2s ease;
+    opacity: 0;
+}
+
+.slide > ul > li.arriving div {
+    /* Removal speed */
+    transition: opacity 0.2s ease;
+    opacity: 0;
 }
 
 h1 {

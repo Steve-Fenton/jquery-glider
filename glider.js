@@ -36,6 +36,7 @@
 		this.linkLocation = $this.attr('data-glider-links') || 'glider-bottom';
 
 		this.interval = null;
+		this.classTimer = null;
 
 		var _this = this;
 
@@ -56,6 +57,7 @@
 			}, 5000);
 		}
 
+		_this.goto(0);
 		_this.resize();
 		$window.on('glideResizeDone', function () { _this.resize() });
 	}
@@ -83,26 +85,13 @@
 			this.positionSlider();
 		},
 		next: function() {
-			this.currentSlide++;
-
-			if (this.currentSlide >= this.items.length) {
-				this.currentSlide = 0;
-			}
-
-			this.positionSlider();
-			return false;
+			return this.goto(this.currentSlide + 1);
 		},
 		back: function() {
-			this.currentSlide--;
-
-			if (this.currentSlide < 0) {
-				this.currentSlide = this.items.length - 1;
-			}
-
-			this.positionSlider();
-			return false;
+			return this.goto(this.currentSlide - 1);
 		},
 		goto: function(index) {
+			var oldSlide = this.currentSlide;
 			this.currentSlide = index;
 
 			if (this.currentSlide >= this.items.length) {
@@ -113,7 +102,18 @@
 				this.currentSlide = this.items.length -1;
 			}
 
+			window.clearTimeout(this.classTimer);
+			this.items.eq(oldSlide).removeClass('selected leaving arriving').addClass('leaving');
+			this.items.eq(this.currentSlide).removeClass('selected leaving arriving').addClass('arriving');
+
 			this.positionSlider();
+
+			var _this = this;
+			this.classTimer = window.setTimeout(function () {
+				_this.items.eq(oldSlide).removeClass('selected leaving arriving');
+				_this.items.eq(_this.currentSlide).removeClass('selected leaving arriving').addClass('selected');
+			}, 1000);
+
 			return false;
 		},
 		getBackControl: function (location, text) {

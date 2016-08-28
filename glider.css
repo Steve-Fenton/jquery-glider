@@ -101,6 +101,7 @@
     border-radius: 50%;
     width: 15px;
     height: 15px;
+    transition: background 0.5s ease;
 }
 
 .glider .glider-link.selected .glider-circle-icon {
