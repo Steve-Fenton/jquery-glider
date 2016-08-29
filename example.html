@@ -314,6 +314,11 @@ pre {
         .append(gliders[index].getBackControl('', '&lt;--'))
         .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
         .append(gliders[index].getNextControl('', '--&gt;'));
+
+    // Events
+    // $window.on('gliderSlideArriving', function(e, glider, slide) {
+    //     console.log('Arriving: ' + slide.text());
+    // });
 </script>
 </body>
 </html>

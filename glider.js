@@ -9,7 +9,7 @@
 	$window.on('resize', function () {
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(function () {
-			$window.trigger('glideResizeDone');
+			$window.trigger('gliderResizeDone');
 		}, 100);
 	});
 	
@@ -59,7 +59,7 @@
 
 		_this.goto(0);
 		_this.resize();
-		$window.on('glideResizeDone', function () { _this.resize() });
+		$window.on('gliderResizeDone', function () { _this.resize() });
 	}
 
 	Glider.prototype = {
@@ -90,7 +90,6 @@
 				var height = $control.height();
 
 				var h = (slideHeight - height) / 2;
-				console.log(slideHeight + ' ' + height + ' '  +h);
 				$control.css('top', h + 'px');
 			});
 
@@ -115,15 +114,22 @@
 			}
 
 			window.clearTimeout(this.classTimer);
-			this.items.eq(oldSlide).removeClass('selected leaving arriving').addClass('leaving');
-			this.items.eq(this.currentSlide).removeClass('selected leaving arriving').addClass('arriving');
+
+			var $oldSlide = this.items.eq(oldSlide);
+			var $newSlide = this.items.eq(this.currentSlide);
+			var _this = this;
+			
+			$oldSlide.removeClass('selected leaving arriving').addClass('leaving');
+			$newSlide.removeClass('selected leaving arriving').addClass('arriving');
+			$window.trigger('gliderSlideLeaving', [_this, $oldSlide]);
+			$window.trigger('gliderSlideArriving', [_this, $newSlide]);
 
 			this.positionSlider();
 
-			var _this = this;
 			this.classTimer = window.setTimeout(function () {
-				_this.items.eq(oldSlide).removeClass('selected leaving arriving');
-				_this.items.eq(_this.currentSlide).removeClass('selected leaving arriving').addClass('selected');
+				$oldSlide.removeClass('selected leaving arriving');
+				$newSlide.removeClass('selected leaving arriving').addClass('selected');
+				$window.trigger('gliderSlideSelected', [_this, $newSlide]);
 			}, 1000);
 
 			return false;
