@@ -13,8 +13,11 @@
 		}, 100);
 	});
 	
+	var idIndex = 0;
+
 	function Glider($this, settings) {
 
+		this.id = 'glider-' + idIndex++;
 		this.nextIcon = '&gt;';
 		this.backIcon = '&lt;';
 		this.linkFunction = function(idx) {
@@ -23,7 +26,7 @@
 
 		this.direction = $this.attr('dir') || 'ltr';
 
-		this.container = $this.addClass('glider glider-' + this.direction + ' ' + settings.animation);
+		this.container = $this.attr('data-glider-id', this.id).addClass('glider glider-' + this.direction + ' ' + settings.animation);
 		this.list = $(settings.list, $this).first().addClass('glider-list');
 		this.items = $(settings.item, this.list).addClass('glider-item');
 
