@@ -84,8 +84,11 @@
 
 	Glider.prototype = {
 		constructor: Glider,
+		getParentWidth: function () {
+			return this.container.width();
+		},
 		getSlideWidth: function () {
-			var parentWidth = this.container.width();
+			var parentWidth = this.getParentWidth();
 
 			// Take into account the number of slides
 			var slideWidth = parentWidth / this.slidesToShow;
@@ -116,7 +119,6 @@
 			}
 		},
 		resize: function() {
-			//var parentWidth = this.container.width();
 			var slideWidth = this.getSlideWidth();
 
 			// Set width of slider and items
@@ -142,6 +144,8 @@
 			return this.goto(this.currentSlide - this.slidesToShow);
 		},
 		goto: function(index) {
+			window.clearTimeout(this.classTimer);
+
 			var oldSlide = this.currentSlide;
 			this.currentSlide = index;
 
@@ -153,23 +157,75 @@
 				this.currentSlide = this.items.length -1;
 			}
 
-			window.clearTimeout(this.classTimer);
+			var parentWidth = this.getParentWidth();
+			var slideWidth = this.getSlideWidth();
 
-			var $oldSlide = this.items.eq(oldSlide);
-			var $newSlide = this.items.eq(this.currentSlide);
+			// TODO: determine "visible slides" and "not visible slides that will become visible"
+			var selectedGroup = [];
+			var leavingGroup = [];
+			var arrivingGroup = [];
+
+			var oldStart = slideWidth * oldSlide;
+			var newStart = slideWidth * this.currentSlide;
+
+			this.items.removeClass('selected leaving arriving');
+
+			for (var i = 0; i < this.items.length; i++) {
+				var slideStartPosition = i * slideWidth;
+
+				var isVisibleBefore = (slideStartPosition >= oldStart && slideStartPosition < (oldStart + parentWidth));
+				var isVisibleAfter = (slideStartPosition >= newStart && slideStartPosition < (newStart + parentWidth));
+
+				if (isVisibleBefore && isVisibleAfter) {
+					selectedGroup.push(this.items.eq(i));
+				}
+
+				if (isVisibleBefore && !isVisibleAfter) {
+					leavingGroup.push(this.items.eq(i));
+				}
+
+				if (!isVisibleBefore && isVisibleAfter) {
+					arrivingGroup.push(this.items.eq(i));
+				}
+			}
+
 			var _this = this;
 			
-			$oldSlide.removeClass('selected leaving arriving').addClass('leaving');
-			$newSlide.removeClass('selected leaving arriving').addClass('arriving');
-			$window.trigger('gliderSlideLeaving', [_this, $oldSlide]);
-			$window.trigger('gliderSlideArriving', [_this, $newSlide]);
+			for (var i = 0; i < leavingGroup.length; i++) {
+				leavingGroup[i].removeClass('selected leaving arriving').addClass('leaving');
+				$window.trigger('gliderSlideLeaving', [_this, leavingGroup[i]]);
+			}
+
+			for (var i = 0; i < arrivingGroup.length; i++) {
+				arrivingGroup[i].removeClass('selected leaving arriving').addClass('arriving');
+				$window.trigger('gliderSlideArriving', [_this, arrivingGroup[i]]);
+			}
+
+			//$oldSlide
+			//$newSlide.removeClass('selected leaving arriving').addClass('arriving');
+			//$window.trigger('gliderSlideLeaving', [_this, $oldSlide]);
+			//$window.trigger('gliderSlideArriving', [_this, $newSlide]);
 
 			this.positionSlider();
 
 			this.classTimer = window.setTimeout(function () {
-				$oldSlide.removeClass('selected leaving arriving');
-				$newSlide.removeClass('selected leaving arriving').addClass('selected');
-				$window.trigger('gliderSlideSelected', [_this, $newSlide]);
+				for (var i = 0; i < leavingGroup.length; i++) {
+					leavingGroup[i].removeClass('selected leaving arriving');
+				}
+
+				for (var i = 0; i < arrivingGroup.length; i++) {
+					arrivingGroup[i].removeClass('selected leaving arriving').addClass('selected');
+					$window.trigger('gliderSlideSelected', [_this, arrivingGroup[i]]);
+				}
+
+				for (var i = 0; i < selectedGroup.length; i++) {
+					selectedGroup[i].removeClass('leaving arriving').addClass('selected');
+					//$window.trigger('gliderSlideSelected', [_this, arrivingGroup[i]]);
+				}
+
+				//$oldSlide.removeClass('selected leaving arriving');
+				//$newSlide.removeClass('selected leaving arriving').addClass('selected');
+				//$window.trigger('gliderSlideSelected', [_this, $newSlide]);
 			}, 1000);
 
 			return false;
@@ -179,7 +235,10 @@
 			return $('<div>')
 				.addClass('glider-control-back')
 				.addClass(location)
-				.click(function () { window.clearInterval(_this.interval); _this.back(); })
+				.click(function () { 
+					window.clearInterval(_this.interval);
+					_this.back();
+				 })
 				.html(text);
 		},
 		getNextControl: function (location, text) {
@@ -187,7 +246,10 @@
 			return $('<div>')
 				.addClass('glider-control-next')
 				.addClass(location)
-				.click(function () { window.clearInterval(_this.interval); _this.next(); })
+				.click(function () {
+					window.clearInterval(_this.interval);
+					_this.next();
+				})
 				.html(text);
 		},
 		getLinkControl: function (location, textFunction) {
@@ -199,7 +261,10 @@
 			var getListItem = function(idx) {
 				return $('<li>')
 					.addClass('glider-link glider-link-' + idx)
-					.click(function () { window.clearInterval(_this.interval); _this.goto(idx); })
+					.click(function () {
+						window.clearInterval(_this.interval)
+						_this.goto(idx);
+					})
 					.html(textFunction(idx));
 			}
 
