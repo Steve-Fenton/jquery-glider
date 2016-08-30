@@ -18,8 +18,8 @@
 	function Glider($this, settings) {
 
 		this.id = 'glider-' + idIndex++;
-		this.nextIcon = '&gt;';
-		this.backIcon = '&lt;';
+		this.nextIcon = settings.nextIcon;
+		this.backIcon = settings.backIcon;
 		this.linkFunction = function(idx) {
 			return '<span class="glider-circle-icon">&nbsp;</span>';
 		};
@@ -280,7 +280,9 @@
 		var settings = $.extend({
 			list: 'ul',
 			item: 'li',
-			animation: 'ease'
+			animation: 'ease',
+			nextIcon: '&gt;',
+			backIcon: '&lt;'
 		}, options);
 
 		var gliders = [];

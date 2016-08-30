@@ -176,8 +176,6 @@ pre {
     </ul>
 </div>
 
-<div id="controls-ltr" class="controls"></div>
-
 <h2>Controls (RTL): <code>dir="rtl" data-glider-controls</code></h2>
 
 <div dir="rtl" class="slide" data-glider-controls="glider-top" data-glider-links="glider-bottom">
@@ -194,8 +192,6 @@ pre {
     </ul>
 </div>
 
-<div id="controls-rtl" class="controls" dir="rtl"></div>
-
 <!-- End of Examples -->
 
 <script
@@ -205,19 +201,10 @@ pre {
 <script src="glider.js"></script>
 <script>
     // You get an array of gliders, one for each matching container
-    var gliders = $('.slide').glider();	
-
-    var index = 0;
-    $('#controls-ltr')
-        .append(gliders[index].getBackControl('', '&lt;--'))
-        .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
-        .append(gliders[index].getNextControl('', '--&gt;'));
-
-    index = 1;
-    $('#controls-rtl')
-        .append(gliders[index].getBackControl('', '&lt;--'))
-        .append(gliders[index].getLinkControl('', function(i) { return i + 1; }))
-        .append(gliders[index].getNextControl('', '--&gt;'));
+    var gliders = $('.slide').glider({
+        nextIcon: '--&gt;',
+        backIcon: '&lt;--'
+    });	
 
 </script>
 </body>
