@@ -27,3 +27,8 @@ You'll need the optional stylesheet, the jQuery library, and the glider library.
         var gliders = $('.slide').glider();	
     </script>
 
+## Issues
+
+If you have any trouble, please create a basic example of your problem using the `test.html` file and add it to any issue you raise.
+
+The most common cause of issues will be that you have a conflicting style applied to the glider, not that there is a problem with the glider itself.
