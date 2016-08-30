@@ -28,6 +28,7 @@ body {
     min-height: 400px;
     padding: 1em 4em;
     background-color: #000;
+    box-sizing: border-box;
 }
 
 /* Recommended style...
@@ -157,6 +158,8 @@ pre {
 <body>
 <h1>Glider Examples</h1>
 
+<!-- Autoplay -->
+
 <h2>Autoplay: <code>data-glider-autoplay</code></h2>
 
 <div dir="ltr" class="slide" data-glider-autoplay>
@@ -189,6 +192,8 @@ pre {
     </ul>
 </div>
 
+<!-- Controls -->
+
 <h2>Controls: <code>data-glider-controls</code></h2>
 
 <div dir="ltr" class="slide" data-glider-controls="glider-top" data-glider-links="glider-bottom">
@@ -220,6 +225,8 @@ pre {
 </code></pre></li>
     </ul>
 </div>
+
+<!-- Autoplay and Controls -->
 
 <h2>Autoplay &amp; Controls (LTR)</h2>
 
@@ -254,6 +261,80 @@ pre {
 </code></pre></li>
     </ul>
 </div>
+
+<!-- Multiple Slides (Specified Width) -->
+
+<h2>Multiple Slides <code>data-glider-multiple="40%"</code></h2>
+
+<div dir="ltr" class="slide multiple" data-glider-controls="glider-middle" data-glider-multiple="40%">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide multiple"
+    data-glider-controls="glider-middle"
+    data-glider-multiple="40%">
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>Multiple Slides (RTL) <code>dir="rtl" data-glider-multiple="40%"</code></h2>
+
+<div dir="rtl" class="slide multiple" data-glider-controls="glider-middle" data-glider-multiple="40%">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide multiple"
+    data-glider-controls="glider-middle"
+    data-glider-multiple="40%">
+</code></pre></li>
+    </ul>
+</div>
+
+<!-- Multiple Slides (Specified Number) -->
+
+<h2>"2" Multiple Slides <code>data-glider-multiple="2"</code></h2>
+
+<div dir="ltr" class="slide" data-glider-controls="glider-middle" data-glider-multiple="2">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-multiple="2">
+</code></pre></li>
+    </ul>
+</div>
+
+<h2>"2" Multiple Slides (RTL) <code>dir="rtl" data-glider-multiple="2"</code></h2>
+
+<div dir="rtl" class="slide" data-glider-controls="glider-middle" data-glider-multiple="2">
+    <ul>
+        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+        <li><pre><code>
+&lt;div
+    dir="ltr"
+    class="slide"
+    data-glider-controls="glider-middle"
+    data-glider-multiple="2">
+</code></pre></li>
+    </ul>
+</div>
+
+<!-- Self-Defined Controls -->
 
 <h2>Autoplay &amp; Self-Defined Controls</h2>
 
@@ -292,6 +373,8 @@ pre {
 </div>
 
 <div id="controls-rtl" class="controls" dir="rtl"></div>
+
+<!-- End of Examples -->
 
 <script
     src="https://code.jquery.com/jquery-2.2.4.min.js"

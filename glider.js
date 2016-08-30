@@ -29,21 +29,39 @@
 		this.container = $this.attr('data-glider-id', this.id).addClass('glider glider-' + this.direction + ' ' + settings.animation);
 		this.list = $(settings.list, $this).first().addClass('glider-list');
 		this.items = $(settings.item, this.list).addClass('glider-item');
-
+		
 		this.currentSlide = 0;
+
+		// Boolean attributes
+		this.multiple = $this[0].hasAttribute('data-glider-multiple');
 		this.autoplay = $this[0].hasAttribute('data-glider-autoplay');
 		this.controls = $this[0].hasAttribute('data-glider-controls');
 		this.links = $this[0].hasAttribute('data-glider-links');
 
+		// Place controls at the bottom by default, or use the attribute
 		this.controlLocation = $this.attr('data-glider-controls') || 'glider-bottom';
+
+		// Place links at the bottom by default, or use the attribute
 		this.linkLocation = $this.attr('data-glider-links') || 'glider-bottom';
+
+		// Show one slide by default, or use the attribute
+		this.fixedSlideWidth = "100%";
+		this.slidesToShow = 1;
+
+		var multipleAttribute = $this.attr('data-glider-multiple') || '1';
+
+		if (multipleAttribute.indexOf('%') > -1 || multipleAttribute.indexOf('px') > -1) {
+			this.fixedSlideWidth = multipleAttribute;
+		} else {
+			var multipleValue = parseInt(multipleAttribute, 10);
+			this.slidesToShow = (isNaN(multipleValue)) ? 1 : multipleValue;
+		}
 
 		this.interval = null;
 		this.classTimer = null;
 
 		var _this = this;
 
-		// controls
 		if (this.controls) {
 			$this.append(this.getBackControl(this.controlLocation, this.backIcon));
 			$this.append(this.getNextControl(this.controlLocation, this.nextIcon));
@@ -53,7 +71,6 @@
 			$this.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
 		}
 
-		// autoplay
 		if (this.autoplay) {
 			this.interval = window.setInterval(function () {
 				_this.next();
@@ -67,24 +84,44 @@
 
 	Glider.prototype = {
 		constructor: Glider,
-		positionSlider: function() {
+		getSlideWidth: function () {
 			var parentWidth = this.container.width();
+
+			// Take into account the number of slides
+			var slideWidth = parentWidth / this.slidesToShow;
+
+			if (this.fixedSlideWidth !== '100%') {
+				
+				if (this.fixedSlideWidth.indexOf('%') > -1) {
+					slideWidth = (parentWidth / 100) * parseInt(this.fixedSlideWidth);
+				} else {
+					slideWidth = parseInt(this.fixedSlideWidth.replace('px', ''));
+				}
+
+				slideWidth = Math.floor(slideWidth);
+			}
+
+			return slideWidth;
+		},
+		positionSlider: function() {
+			var slideWidth = this.getSlideWidth();
 
 			$('.glider-link', this.container).removeClass('selected');
 			$('.glider-link-' + this.currentSlide, this.container).addClass('selected');
 
 			if (this.direction === 'ltr') {
-				this.list.css({'left': '-' + (parentWidth * this.currentSlide) + 'px'});
+				this.list.css({'left': '-' + (slideWidth * this.currentSlide) + 'px'});
 			} else {
-				this.list.css({'right': '-' + (parentWidth * this.currentSlide) + 'px'});
+				this.list.css({'right': '-' + (slideWidth * this.currentSlide) + 'px'});
 			}
 		},
 		resize: function() {
-			var parentWidth = this.container.width();
+			//var parentWidth = this.container.width();
+			var slideWidth = this.getSlideWidth();
 
 			// Set width of slider and items
-			this.list.css({ width: (parentWidth * this.items.length) + 'px' });
-			this.items.css({ width: parentWidth + 'px' });
+			this.list.css({ width: (slideWidth * (this.items.length + this.slidesToShow))  + 'px' });
+			this.items.css({ width: slideWidth + 'px' });
 
 			// Set controls and links placed in the middle to half way vertically
 			var slideHeight = this.items.eq(0).height();
@@ -99,10 +136,10 @@
 			this.positionSlider();
 		},
 		next: function() {
-			return this.goto(this.currentSlide + 1);
+			return this.goto(this.currentSlide + this.slidesToShow);
 		},
 		back: function() {
-			return this.goto(this.currentSlide - 1);
+			return this.goto(this.currentSlide - this.slidesToShow);
 		},
 		goto: function(index) {
 			var oldSlide = this.currentSlide;
