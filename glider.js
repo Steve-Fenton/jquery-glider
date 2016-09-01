@@ -47,12 +47,14 @@
 
         // Show one slide by default, or use the attribute
         this.fixedSlideWidth = "100%";
+        this.widthInfo = [];
         this.slidesToShow = 1;
 
         var multipleAttribute = $this.attr('data-glider-multiple') || '1';
 
         if (multipleAttribute.indexOf('%') > -1 || multipleAttribute.indexOf('px') > -1) {
             this.fixedSlideWidth = multipleAttribute;
+            this.setWidthInformation();
         } else {
             var multipleValue = parseInt(multipleAttribute, 10);
             this.slidesToShow = (isNaN(multipleValue)) ? 1 : multipleValue;
@@ -85,8 +87,36 @@
 
     Glider.prototype = {
         constructor: Glider,
+        setWidthInformation: function () {
+            if (this.fixedSlideWidth.charAt(0) === '[') {
+                // Parses DSL for responsive sizes, i.e. [1200:300px,0:200px]
+                var data = this.fixedSlideWidth.replace(/[\[\]]/g, '').split(',');
+                for (var i = 0; i < data.length; i++) {
+                    var info = data[i].split(':');
+                    this.widthInfo.push({
+                        p: parseInt(info[0], 10),
+                        w: info[1]
+                    });
+                }
+
+                this.widthInfo.sort(function (a, b) {
+                    return (b.p - a.p);
+                });
+            } else {
+                this.widthInfo = [{ p:0, w: this.fixedSlideWidth }];
+            }
+        },
         getParentWidth: function () {
             return this.container.width();
+        },
+        getPhysicalSize: function (rawValue) {
+            // Converts % or px values into plain pixel number
+            if (rawValue.indexOf('%') > -1) {
+                var parentWidth = this.getParentWidth();
+                return (parentWidth / 100) * parseInt(rawValue);
+            } else {
+                return parseInt(rawValue.replace('px', ''));
+            }
         },
         getSlideWidth: function () {
             var parentWidth = this.getParentWidth();
@@ -95,17 +125,16 @@
             var slideWidth = parentWidth / this.slidesToShow;
 
             if (this.fixedSlideWidth !== '100%') {
-
-                if (this.fixedSlideWidth.indexOf('%') > -1) {
-                    slideWidth = (parentWidth / 100) * parseInt(this.fixedSlideWidth);
-                } else {
-                    slideWidth = parseInt(this.fixedSlideWidth.replace('px', ''));
+                // Multiple Attribute specified widths
+                for (var i = 0; i < this.widthInfo.length; i++) {
+                    if (parentWidth >= this.widthInfo[i].p) {
+                        slideWidth = this.getPhysicalSize(this.widthInfo[i].w);
+                        break;
+                    }
                 }
-
-                slideWidth = Math.floor(slideWidth);
             }
 
-            return slideWidth;
+            return  Math.floor(slideWidth);
         },
         positionSlider: function () {
             var slideWidth = this.getSlideWidth();
