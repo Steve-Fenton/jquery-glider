@@ -119,11 +119,20 @@
 			}
 		},
 		resize: function() {
+			var parentWidth = this.getParentWidth();
 			var slideWidth = this.getSlideWidth();
 
 			// Set width of slider and items
 			this.list.css({ width: (slideWidth * (this.items.length + this.slidesToShow))  + 'px' });
 			this.items.css({ width: slideWidth + 'px' });
+
+			// Don't show controls if all slides are visible
+			var visibility = 'visible';
+			if ((slideWidth * this.items.length) <= parentWidth) {
+				visibility = 'hidden';
+			}
+			
+			$('.glider-control-back, .glider-control-next, .glider-control-link', this.container).css({'visibility': visibility});
 
 			// Set controls and links placed in the middle to half way vertically
 			var slideHeight = this.items.eq(0).height();
@@ -201,11 +210,6 @@
 				$window.trigger('gliderSlideArriving', [_this, arrivingGroup[i]]);
 			}
 
-			//$oldSlide
-			//$newSlide.removeClass('selected leaving arriving').addClass('arriving');
-			//$window.trigger('gliderSlideLeaving', [_this, $oldSlide]);
-			//$window.trigger('gliderSlideArriving', [_this, $newSlide]);
-
 			this.positionSlider();
 
 			this.classTimer = window.setTimeout(function () {
@@ -222,10 +226,6 @@
 					selectedGroup[i].removeClass('leaving arriving').addClass('selected');
 					//$window.trigger('gliderSlideSelected', [_this, arrivingGroup[i]]);
 				}
-
-				//$oldSlide.removeClass('selected leaving arriving');
-				//$newSlide.removeClass('selected leaving arriving').addClass('selected');
-				//$window.trigger('gliderSlideSelected', [_this, $newSlide]);
 			}, 1000);
 
 			return false;
