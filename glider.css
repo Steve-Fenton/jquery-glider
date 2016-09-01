@@ -2,6 +2,7 @@
 .glider {
     overflow: hidden;
     position: relative;
+    max-width: 100vw !important;
 }
 
 .glider-list {
