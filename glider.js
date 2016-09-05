@@ -21,6 +21,7 @@
         this.id = 'glider-' + idIndex++;
         this.nextIcon = settings.nextIcon;
         this.backIcon = settings.backIcon;
+        this.navigationMode = settings.navigationMode;
         this.linkFunction = function (idx) {
             return '<span class="glider-circle-icon">&nbsp;</span>';
         };
@@ -196,10 +197,23 @@
                 this.currentSlide = this.items.length - 1;
             }
 
+            // Determine whether to show the back button
+            if (this.navigationMode === 'stop' && this.currentSlide === 0) {
+                $('.glider-control-back', this.container).hide();
+            } else {
+                $('.glider-control-back', this.container).show();
+            }
+
+            // Determine whether to show the next button
+            if (this.navigationMode === 'stop' && this.currentSlide === (this.items.length - 1)) {
+                $('.glider-control-next', this.container).hide();
+            } else {
+                $('.glider-control-next', this.container).show();
+            }
+
             var parentWidth = this.getParentWidth();
             var slideWidth = this.getSlideWidth();
 
-            // TODO: determine "visible slides" and "not visible slides that will become visible"
             var selectedGroup = [];
             var leavingGroup = [];
             var arrivingGroup = [];
@@ -312,7 +326,8 @@
             item: 'li',
             animation: 'ease',
             nextIcon: '&gt;',
-            backIcon: '&lt;'
+            backIcon: '&lt;',
+            navigationMode: 'cycle'
         }, options);
 
         var gliders = [];
