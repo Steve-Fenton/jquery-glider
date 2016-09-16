@@ -19,13 +19,14 @@
     function Glider($this, settings) {
 
         this.id = 'glider-' + idIndex++;
-        this.nextIcon = settings.nextIcon;
-        this.backIcon = settings.backIcon;
-        this.navigationMode = settings.navigationMode;
+        this.settings = settings;
+
+        // Default link function
         this.linkFunction = function (idx) {
             return '<span class="glider-circle-icon">&nbsp;</span>';
         };
 
+        // Direction
         this.direction = $this.attr('dir') || 'ltr';
 
         this.container = $this.attr('data-glider-id', this.id).addClass('glider glider-' + this.direction + ' ' + settings.animation);
@@ -35,10 +36,10 @@
         this.currentSlide = 0;
 
         // Boolean attributes
-        this.multiple = $this[0].hasAttribute('data-glider-multiple');
-        this.autoplay = $this[0].hasAttribute('data-glider-autoplay');
-        this.controls = $this[0].hasAttribute('data-glider-controls');
-        this.links = $this[0].hasAttribute('data-glider-links');
+        this.hasMultiple = $this[0].hasAttribute('data-glider-multiple');
+        this.hasAutoplay = $this[0].hasAttribute('data-glider-autoplay');
+        this.hasControls = $this[0].hasAttribute('data-glider-controls');
+        this.hasLinks = $this[0].hasAttribute('data-glider-links');
 
         // Place controls at the bottom by default, or use the attribute
         this.controlLocation = $this.attr('data-glider-controls') || 'glider-bottom';
@@ -66,16 +67,16 @@
 
         var _this = this;
 
-        if (this.controls) {
-            $this.append(this.getBackControl(this.controlLocation, this.backIcon));
-            $this.append(this.getNextControl(this.controlLocation, this.nextIcon));
+        if (this.hasControls) {
+            $this.append(this.getBackControl(this.controlLocation, this.settings.backIcon));
+            $this.append(this.getNextControl(this.controlLocation, this.settings.nextIcon));
         }
 
-        if (this.links) {
+        if (this.hasLinks) {
             $this.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
         }
 
-        if (this.autoplay) {
+        if (this.hasAutoplay) {
             this.interval = window.setInterval(function () {
                 _this.next();
             }, 5000);
@@ -198,14 +199,14 @@
             }
 
             // Determine whether to show the back button
-            if (this.navigationMode === 'stop' && this.currentSlide === 0) {
+            if (this.settings.navigationMode === 'stop' && this.currentSlide === 0) {
                 $('.glider-control-back', this.container).hide();
             } else {
                 $('.glider-control-back', this.container).show();
             }
 
             // Determine whether to show the next button
-            if (this.navigationMode === 'stop' && this.currentSlide === (this.items.length - 1)) {
+            if (this.settings.navigationMode === 'stop' && this.currentSlide === (this.items.length - 1)) {
                 $('.glider-control-next', this.container).hide();
             } else {
                 $('.glider-control-next', this.container).show();
