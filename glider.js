@@ -6,7 +6,7 @@
 
 (function ($) {
     var resizeTimer;
-    $window = $(window);
+    var $window = $(window);
     $window.on('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
@@ -67,13 +67,21 @@
 
         var _this = this;
 
+        // Determine where controls should be placed        
+        var $controlElement = $this;
+        if (this.settings.controls) {
+            $controlElement = $this.parent().closest(this.settings.controls).css('position', 'relative').attr('dir', this.direction);
+        }
+        
+        $controlElement.addClass('glider-controls-' + this.direction);
+
         if (this.hasControls) {
-            $this.append(this.getBackControl(this.controlLocation, this.settings.backIcon));
-            $this.append(this.getNextControl(this.controlLocation, this.settings.nextIcon));
+            $controlElement.append(this.getBackControl(this.controlLocation, this.settings.backIcon));
+            $controlElement.append(this.getNextControl(this.controlLocation, this.settings.nextIcon));
         }
 
         if (this.hasLinks) {
-            $this.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
+            $controlElement.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
         }
 
         if (this.hasAutoplay) {
@@ -169,7 +177,7 @@
             // Set controls and links placed in the middle to half way vertically
             var slideHeight = this.items.eq(0).height();
             $('.glider-middle', this.container).each(function () {
-                $control = $(this);
+                var $control = $(this);
                 var height = $control.height();
 
                 var h = (slideHeight - height) / 2;
@@ -325,6 +333,7 @@
         var settings = $.extend({
             list: 'ul',
             item: 'li',
+            controls: '',
             animation: 'ease',
             nextIcon: '&gt;',
             backIcon: '&lt;',

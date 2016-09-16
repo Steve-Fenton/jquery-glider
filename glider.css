@@ -38,7 +38,7 @@
     float: left;
 }
 
-.glider .glider-control-back, .glider .glider-control-next {
+.glider-control-back, .glider-control-next {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.5);
     color: #FFF;
@@ -46,39 +46,39 @@
     padding: 0.5em;
 }
 
-.glider-ltr .glider-control-back {
+.glider-controls-ltr .glider-control-back {
     position: absolute;
     left: 0;
 }
 
-.glider-ltr .glider-control-next {
+.glider-controls-ltr .glider-control-next {
     position: absolute;
     right: 0;
 }
 
-.glider-rtl .glider-control-back {
+.glider-controls-rtl .glider-control-back {
        position: absolute;
     right: 0;
 }
 
-.glider-rtl .glider-control-next {
+.glider-controls-rtl .glider-control-next {
     position: absolute;
     left: 0;
 }
 
-.glider .glider-top {
+.glider-top {
     top: 0;
 }
 
-.glider .glider-middle {
+.glider-middle {
     top: 40%;
 }
 
-.glider .glider-bottom {
+.glider-bottom {
     bottom: 0;
 }
 
-.glider .glider-control-link {
+.glider-control-link {
     padding: 0;
     margin: 0 auto;
     position: absolute;
@@ -87,7 +87,7 @@
     text-align: center;
 }
 
-.glider .glider-control-link li {
+.glider-control-link li {
     list-style: none;
     display: inline-block;
     cursor: pointer;
@@ -96,7 +96,7 @@
     color: #FFF;
 }
 
-.glider .glider-circle-icon {
+.glider-circle-icon {
     display: inline-block;
     background-color: #FFF;
     border-radius: 50%;
@@ -105,6 +105,6 @@
     transition: background 0.5s ease;
 }
 
-.glider .glider-link.selected .glider-circle-icon {
+.glider-link.selected .glider-circle-icon {
     background-color: #1F3;
 }

@@ -158,38 +158,44 @@ pre {
 <body>
 <h1>Glider Examples</h1>
 
-<!-- Controls -->
+<!-- Multiple Slides (Specified Width) -->
 
-<h2>Controls: <code>data-glider-controls</code></h2>
+<h2>Multiple Slides <code>data-glider-multiple="40%"</code></h2>
 
-<div dir="ltr" class="slide" data-glider-controls="glider-top" data-glider-links="glider-bottom" data-glider-multiple="[1200:30%,0:300px]">
-    <ul>
-        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
-        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
-        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
-        <li><pre><code>
-&lt;div
-    dir="ltr"
-    class="slide"
-    data-glider-controls="glider-top">
-</code></pre></li>
-    </ul>
+<div>
+    <div dir="ltr" class="slide multiple" data-glider-multiple="40%" data-glider-controls="glider-middle">
+        <ul>
+            <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Crooked Timber</div></li>
+            <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Troublegum</div></li>
+            <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>Therapy?</h3><br /><div>Infernal Love</div></li>
+            <li><pre><code>
+    &lt;div
+        dir="ltr"
+        class="slide multiple"
+        data-glider-controls="glider-middle"
+        data-glider-multiple="40%">
+    </code></pre></li>
+        </ul>
+    </div>
 </div>
 
-<h2>Controls (RTL): <code>dir="rtl" data-glider-controls</code></h2>
+<h2>Multiple Slides (RTL) <code>dir="rtl" data-glider-multiple="40%"</code></h2>
 
-<div dir="rtl" class="slide" data-glider-controls="glider-top" data-glider-links="glider-bottom">
-    <ul>
-        <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
-        <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
-        <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
-        <li><pre dir="ltr"><code>
-&lt;div
-    dir="rtl"
-    class="slide"
-    data-glider-controls="glider-top">
-</code></pre></li>
-    </ul>
+<div>
+    <div dir="rtl" class="slide multiple" data-glider-controls="glider-middle" data-glider-multiple="40%">
+        <ul>
+            <li style="background-image: url('therapy-001.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الأخشاب ملتوية</div></li>
+            <li style="background-image: url('therapy-002.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>مشكلة اللثة</div></li>
+            <li style="background-image: url('therapy-003.jpg'); background-size: cover;"><h3>علاج</h3><br /><div>الحب الجهنمية</div></li>
+            <li><pre><code>
+    &lt;div
+        dir="ltr"
+        class="slide multiple"
+        data-glider-controls="glider-middle"
+        data-glider-multiple="40%">
+    </code></pre></li>
+        </ul>
+    </div>
 </div>
 
 <!-- End of Examples -->
@@ -202,11 +208,8 @@ pre {
 <script>
     // You get an array of gliders, one for each matching container
     var gliders = $('.slide').glider({
-        nextIcon: '<span style="color: blue;">--&gt;</span>',
-        backIcon: '&lt;--',
-        navigationMode: 'stop'
-    });	
-
+        controls: 'div'
+    });
 </script>
 </body>
 </html>
