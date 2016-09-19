@@ -208,7 +208,6 @@
             }
 
             // Determine whether to show the back button
-            console.log(this.id + ' ' + this.settings.navigationMode);
             if (this.settings.navigationMode === 'stop' && this.currentSlide === 0) {
                 $('.glider-control-back', this.controlElement).hide();
             } else {
