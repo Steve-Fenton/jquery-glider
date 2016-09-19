@@ -68,20 +68,20 @@
         var _this = this;
 
         // Determine where controls should be placed        
-        var $controlElement = $this;
+        this.controlElement = $this;
         if (this.settings.controls) {
-            $controlElement = $this.parent().closest(this.settings.controls).css('position', 'relative').attr('dir', this.direction);
+            this.controlElement = $this.parent().closest(this.settings.controls).css('position', 'relative').attr('dir', this.direction);
         }
         
-        $controlElement.addClass('glider-controls-' + this.direction);
+        this.controlElement.addClass('glider-controls-' + this.direction);
 
         if (this.hasControls) {
-            $controlElement.append(this.getBackControl(this.controlLocation, this.settings.backIcon));
-            $controlElement.append(this.getNextControl(this.controlLocation, this.settings.nextIcon));
+            this.controlElement.append(this.getBackControl(this.controlLocation, this.settings.backIcon));
+            this.controlElement.append(this.getNextControl(this.controlLocation, this.settings.nextIcon));
         }
 
         if (this.hasLinks) {
-            $controlElement.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
+            this.controlElement.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
         }
 
         if (this.hasAutoplay) {
@@ -208,17 +208,18 @@
             }
 
             // Determine whether to show the back button
+            console.log(this.id + ' ' + this.settings.navigationMode);
             if (this.settings.navigationMode === 'stop' && this.currentSlide === 0) {
-                $('.glider-control-back', this.container).hide();
+                $('.glider-control-back', this.controlElement).hide();
             } else {
-                $('.glider-control-back', this.container).show();
+                $('.glider-control-back', this.controlElement).show();
             }
 
             // Determine whether to show the next button
             if (this.settings.navigationMode === 'stop' && this.currentSlide === (this.items.length - 1)) {
-                $('.glider-control-next', this.container).hide();
+                $('.glider-control-next', this.controlElement).hide();
             } else {
-                $('.glider-control-next', this.container).show();
+                $('.glider-control-next', this.controlElement).show();
             }
 
             var parentWidth = this.getParentWidth();
