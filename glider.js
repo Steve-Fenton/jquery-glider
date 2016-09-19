@@ -117,7 +117,8 @@
             }
         },
         getParentWidth: function () {
-            return this.container.width();
+            var width = this.container.width();
+            return (width > 0) ? width : 0;
         },
         getPhysicalSize: function (rawValue) {
             // Converts % or px values into plain pixel number
