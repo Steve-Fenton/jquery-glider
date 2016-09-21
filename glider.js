@@ -65,8 +65,6 @@
         this.interval = null;
         this.classTimer = null;
 
-        var _this = this;
-
         // Determine where controls should be placed        
         this.controlElement = $this;
         if (this.settings.controls) {
@@ -84,19 +82,24 @@
             this.controlElement.append($('<div>').append(this.getLinkControl(this.linkLocation, this.linkFunction)));
         }
 
-        if (this.hasAutoplay) {
-            this.interval = window.setInterval(function () {
-                _this.next();
-            }, 5000);
-        }
-
-        _this.goto(0);
-        _this.resize();
+        var _this = this;
         $window.on('gliderResizeDone', function () { _this.resize() });
+        this.setUp();
     }
 
     Glider.prototype = {
         constructor: Glider,
+        setUp: function () {
+            var _this = this;
+            if (this.hasAutoplay) {
+                this.interval = window.setInterval(function () {
+                    _this.next();
+                }, 5000);
+            }
+
+            this.goto(0);
+            this.resize();
+        },
         setWidthInformation: function () {
             if (this.fixedSlideWidth.charAt(0) === '[') {
                 // Parses DSL for responsive sizes, i.e. [1200:300px,0:200px]
