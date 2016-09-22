@@ -124,8 +124,8 @@
 
             if (width <= 0) {
                 var $parent = this.container.parent();
-                var w = parseInt($parent().css('max-width'), 10);
-                var mw = $parent().width();
+                var w = parseInt($parent.css('max-width'), 10);
+                var mw = $parent.width();
 
                 width = Math.min(w, mw);
             }
