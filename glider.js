@@ -1,7 +1,7 @@
 /*
-	jQuery Glider Plugin
-	by Steve Fenton
-	https://github.com/Steve-Fenton/jquery-glider
+    jQuery Glider Plugin
+    by Steve Fenton
+    https://github.com/Steve-Fenton/jquery-glider
  */
 
 (function ($) {
@@ -70,7 +70,7 @@
         if (this.settings.controls) {
             this.controlElement = $this.parent().closest(this.settings.controls).css('position', 'relative').attr('dir', this.direction);
         }
-        
+
         this.controlElement.addClass('glider-controls-' + this.direction);
 
         if (this.hasControls) {
@@ -116,7 +116,7 @@
                     return (b.p - a.p);
                 });
             } else {
-                this.widthInfo = [{ p:0, w: this.fixedSlideWidth }];
+                this.widthInfo = [{ p: 0, w: this.fixedSlideWidth }];
             }
         },
         getParentWidth: function () {
@@ -148,7 +148,7 @@
                 }
             }
 
-            return  Math.floor(slideWidth);
+            return Math.floor(slideWidth);
         },
         positionSlider: function () {
             var parentWidth = this.getParentWidth();
@@ -191,13 +191,15 @@
 
             // Set controls and links placed in the middle to half way vertically
             var slideHeight = this.items.eq(0).height();
-            $('.glider-middle', this.parent).each(function () {
-                var $control = $(this);
-                var height = $control.height();
+            if (slideHeight > 200) {
+                $('.glider-middle', this.parent).each(function () {
+                    var $control = $(this);
+                    var height = $control.height();
 
-                var h = (slideHeight - height) / 2;
-                $control.css('top', h + 'px');
-            });
+                    var h = (slideHeight - height) / 2;
+                    $control.css('top', h + 'px');
+                });
+            }
 
             this.positionSlider();
         },
