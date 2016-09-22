@@ -172,9 +172,7 @@
 
             // Don't show controls if all slides are visible
             var visibility = 'visible';
-            console.log('s:' + (slideWidth * this.items.length) + ' p:' + parentWidth);
             if ((slideWidth * this.items.length) <= parentWidth) {
-                console.log('Hiding Controls');
                 visibility = 'hidden';
             }
 
@@ -182,7 +180,7 @@
 
             // Set controls and links placed in the middle to half way vertically
             var slideHeight = this.items.eq(0).height();
-            $('.glider-middle', this.container).each(function () {
+            $('.glider-middle', this.controlElement).each(function () {
                 var $control = $(this);
                 var height = $control.height();
 
