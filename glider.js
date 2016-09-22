@@ -151,6 +151,7 @@
             return  Math.floor(slideWidth);
         },
         positionSlider: function () {
+            var parentWidth = this.getParentWidth();
             var slideWidth = this.getSlideWidth();
 
             $('.glider-link', this.container).removeClass('selected');
@@ -160,6 +161,16 @@
                 this.list.css({ 'left': '-' + (slideWidth * this.currentSlide) + 'px' });
             } else {
                 this.list.css({ 'right': '-' + (slideWidth * this.currentSlide) + 'px' });
+            }
+
+            // For multi-slide layouts, hide the next control if the last slide is visible
+            if (this.hasMultiple && this.settings.navigationMode === 'stop') {
+                var visibility = 'visible';
+                if (((this.items.length - this.currentSlide) * slideWidth) <= parentWidth) {
+                    visibility = 'hidden'
+                }
+
+                $('.glider-control-next', this.controlElement).css({ 'visibility': visibility });
             }
         },
         resize: function () {
@@ -210,14 +221,14 @@
                 this.currentSlide = this.items.length - 1;
             }
 
-            // Determine whether to show the back button
+            // Determine whether to show the back button based on index
             if (this.settings.navigationMode === 'stop' && this.currentSlide === 0) {
                 $('.glider-control-back', this.controlElement).hide();
             } else {
                 $('.glider-control-back', this.controlElement).show();
             }
 
-            // Determine whether to show the next button
+            // Determine whether to show the next button based on index
             if (this.settings.navigationMode === 'stop' && this.currentSlide === (this.items.length - 1)) {
                 $('.glider-control-next', this.controlElement).hide();
             } else {
@@ -268,6 +279,7 @@
             }
 
             this.positionSlider();
+
 
             this.classTimer = window.setTimeout(function () {
                 for (var i = 0; i < leavingGroup.length; i++) {
