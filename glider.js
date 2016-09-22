@@ -122,8 +122,12 @@
         getParentWidth: function () {
             var width = this.container.width();
 
-            if (width < 0) {
-                width = this.container.parent().css('max-width');
+            if (width <= 0) {
+                var $parent = this.container.parent();
+                var w = $parent().css('max-width');
+                var mw = $parent().width();
+
+                width = Math.min(w, mw);
             }
 
             return (width > 0) ? width : 0;
