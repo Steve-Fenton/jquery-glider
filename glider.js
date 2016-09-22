@@ -121,6 +121,11 @@
         },
         getParentWidth: function () {
             var width = this.container.width();
+
+            if (width < 0) {
+                width = this.container.parent().css('max-width');
+            }
+
             return (width > 0) ? width : 0;
         },
         getPhysicalSize: function (rawValue) {
