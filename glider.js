@@ -92,9 +92,7 @@
         setUp: function () {
             var _this = this;
             if (this.hasAutoplay) {
-                this.interval = window.setInterval(function () {
-                    _this.next();
-                }, 5000);
+                this.start();
             }
 
             this.goto(0);
@@ -211,6 +209,16 @@
             }
 
             this.positionSlider();
+        },
+        start: function () {
+            this.stop();
+            var _this = this;
+            this.interval = window.setInterval(function () {
+                _this.next();
+            }, 5000);
+        },
+        stop: function() {
+            window.clearInterval(this.interval);
         },
         next: function () {
             return this.goto(this.currentSlide + this.slidesToShow);
