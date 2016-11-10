@@ -324,7 +324,7 @@
                 .addClass('glider-control-back')
                 .addClass(location)
                 .click(function () {
-                    window.clearInterval(_this.interval);
+                    _this.stop();
                     _this.back();
                 })
                 .html(text);
@@ -335,7 +335,7 @@
                 .addClass('glider-control-next')
                 .addClass(location)
                 .click(function () {
-                    window.clearInterval(_this.interval);
+                    _this.stop();
                     _this.next();
                 })
                 .html(text);
