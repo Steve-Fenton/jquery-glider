@@ -199,7 +199,7 @@
             // Set controls and links placed in the middle to half way vertically
             var slideHeight = this.items.eq(0).height();
             if (slideHeight > 200) {
-                $('.glider-middle', this.parent).each(function () {
+                $('.glider-middle', this.controlElement).each(function () {
                     var $control = $(this);
                     var height = $control.height();
 
