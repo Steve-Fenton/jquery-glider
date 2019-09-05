@@ -217,7 +217,7 @@
                 _this.next();
             }, _this.settings.delay);
         },
-        stop: function() {
+        stop: function () {
             window.clearInterval(this.interval);
         },
         next: function () {
