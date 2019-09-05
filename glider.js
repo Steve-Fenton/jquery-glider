@@ -215,7 +215,7 @@
             var _this = this;
             this.interval = window.setInterval(function () {
                 _this.next();
-            }, 5000);
+            }, _this.settings.delay);
         },
         stop: function() {
             window.clearInterval(this.interval);
@@ -372,7 +372,8 @@
             animation: 'ease',
             nextIcon: '&gt;',
             backIcon: '&lt;',
-            navigationMode: 'cycle'
+            navigationMode: 'cycle',
+            delay: 5000
         }, options);
 
         var gliders = [];
